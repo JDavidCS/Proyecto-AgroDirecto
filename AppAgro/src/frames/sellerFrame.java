@@ -17,7 +17,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class sellerFrame {
 
@@ -36,25 +39,11 @@ public class sellerFrame {
         frame.setIconImage(icon.getImage());
         frame.setLayout(new BorderLayout());
 
-        displayContent();
-
+        displayFormContent();
+        displayTable();
     }
 
-    public void displayContent(){
-        listPanel = new JPanel();
-            listPanel.setBackground(Color.LIGHT_GRAY);
-            listPanel.setLayout(new BorderLayout());
-
-            JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            JLabel titleLabel = new JLabel("Hola, prueba");
-            titleLabel.setFont(new Font(null, Font.BOLD, 30));
-
-            titlePanel.add(titleLabel);
-            listPanel.add(titlePanel, BorderLayout.NORTH);
-
-            formPanel = new JPanel();
-
-        frame.add(listPanel, BorderLayout.CENTER);
+    private void displayFormContent(){
 
         formPanel = new JPanel();
         formPanel.setPreferredSize(new Dimension(frame.getWidth() * 1 / 2, frame.getHeight()));
@@ -152,11 +141,14 @@ public class sellerFrame {
             formPanel.add(weightInput, gbc);
 
             JButton send = new JButton("Enviar");
+            send.setFocusPainted(false);
             send.setBackground(new Color(8, 96, 3));
             send.setForeground(Color.WHITE);
             gbc.gridx = 1;
             gbc.gridy = 8;
+            gbc.gridwidth = 2;
             formPanel.add(send, gbc);
+            sendEvent(send);
 
             // departamento & municipio Label
             gbc.insets = new Insets(10, 10, 0, 5);
@@ -169,9 +161,46 @@ public class sellerFrame {
             gbc.gridy = 3;
             formPanel.add(munLabel, gbc);
 
-
         frame.add(formPanel, BorderLayout.EAST);
 
+    }
+
+    private void displayTable(){
+        listPanel = new JPanel();
+            listPanel.setBackground(Color.LIGHT_GRAY);
+            listPanel.setLayout(new BorderLayout());
+
+            JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel titleLabel = new JLabel("Hola, David");
+            titleLabel.setFont(new Font(null, Font.BOLD, 30));
+
+            titlePanel.add(titleLabel);
+            listPanel.add(titlePanel, BorderLayout.NORTH);
+
+            JPanel tablePanel = new JPanel();
+                tablePanel.setLayout(new BorderLayout());
+                tablePanel.setBackground(Color.DARK_GRAY);
+
+                String[] columnNames = {"Producto", "Comprador", "Destino", "Bultos", "Peso"};
+                DefaultTableModel model = new DefaultTableModel(null, columnNames) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+
+                JTable table = new JTable(model);
+                table.getTableHeader().setReorderingAllowed(false);
+                table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+
+                JScrollPane newScroll = new JScrollPane(table);
+                newScroll.getViewport().setBackground(Color.LIGHT_GRAY);
+
+                tablePanel.add(newScroll, BorderLayout.CENTER);
+                
+            listPanel.add(tablePanel, BorderLayout.CENTER);
+
+        frame.add(listPanel, BorderLayout.CENTER);
     }
 
     private void eventJcombo(JComboBox<String> dep, JComboBox<String> mun){
@@ -179,10 +208,17 @@ public class sellerFrame {
         dep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                System.out.println(dep.getSelectedIndex());
-
                 if(dep.getSelectedIndex() < 0) mun.setEnabled(false);
                 else mun.setEnabled(true);
+            }
+        });
+    }
+
+    private void sendEvent(JButton button){
+        button.addActionListener(new ActionListener() {
+            @Override 
+            public void actionPerformed(ActionEvent e){
+                System.out.println("enviando");
             }
         });
     }
