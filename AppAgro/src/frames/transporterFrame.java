@@ -22,12 +22,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class conveyorFrame {
+public class transporterFrame {
 
     JFrame frame;
     JPanel listPanel, formPanel;
 
-    public conveyorFrame(){
+    public transporterFrame(){
         initialize();
     }
 
@@ -186,6 +186,22 @@ public class conveyorFrame {
         listPanel.add(tablePanel, BorderLayout.CENTER);
 
         frame.add(listPanel, BorderLayout.CENTER);
+
+        // peso total
+        JPanel totalWeightPanel = new JPanel();
+        totalWeightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+            JLabel totalWeightLabel = new JLabel("Peso total:");
+            totalWeightLabel.setFont(new Font(null, Font.BOLD, 18));
+
+            JLabel valueLabel = new JLabel("800 kg");
+            valueLabel.setFont(new Font(null, Font.PLAIN, 14));
+        totalWeightPanel.add(totalWeightLabel);
+        totalWeightPanel.add(valueLabel);
+        listPanel.add(totalWeightPanel, BorderLayout.SOUTH);
+        
+
+
     }
 
     private void eventJcombo(JComboBox<String> dep, JComboBox<String> mun) {

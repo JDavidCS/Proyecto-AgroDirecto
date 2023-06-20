@@ -2,7 +2,8 @@ package AppAgro.src;
 
 import javax.swing.SwingUtilities;
 
-import AppAgro.src.frames.conveyorFrame;
+import AppAgro.src.frames.buyerFrame;
+import AppAgro.src.frames.transporterFrame;
 import AppAgro.src.frames.logIn;
 import AppAgro.src.frames.sellerFrame;
 
@@ -16,13 +17,17 @@ public class Main {
 
                 // frame.show();
 
-                // sellerFrame frame = new sellerFrame();
+                // sellerFrame frame2 = new sellerFrame();
 
-                // frame.show();
+                // frame2.show();
 
-                conveyorFrame frame = new conveyorFrame();
+                transporterFrame frame3 = new transporterFrame();
 
-                frame.show();
+                frame3.show();
+
+                buyerFrame frame4 = new buyerFrame();
+
+                frame4.show();
             }
         });
         

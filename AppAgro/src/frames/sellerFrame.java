@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -182,7 +183,9 @@ public class sellerFrame {
                 tablePanel.setBackground(Color.DARK_GRAY);
 
                 String[] columnNames = {"Producto", "Comprador", "Destino", "Bultos", "Peso"};
-                DefaultTableModel model = new DefaultTableModel(null, columnNames) {
+                String[][] data = {{"Papa", "40343", "Armenia", "4", "34"},{"Fresa", "5345", "Narnia"}};
+
+                DefaultTableModel model = new DefaultTableModel(data, columnNames) {
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -190,6 +193,7 @@ public class sellerFrame {
                 };
 
                 JTable table = new JTable(model);
+                table.setRowHeight(25);
                 table.getTableHeader().setReorderingAllowed(false);
                 table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
 
@@ -208,8 +212,21 @@ public class sellerFrame {
         dep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                if(dep.getSelectedIndex() < 0) mun.setEnabled(false);
-                else mun.setEnabled(true);
+                if(dep.getSelectedIndex() < 0) {
+                    mun.setEnabled(false);
+                    mun.removeAllItems();
+                }
+                else {
+                    mun.removeAllItems();
+                    mun.addItem(null);
+                    System.out.println(dep.getSelectedItem());
+                    mun.setEnabled(true);
+                    String[] data = { "Hol", "a", "nuevos", "datos" };
+
+                    for (String string : data) {
+                        mun.addItem(string);
+                    }
+                }
             }
         });
     }

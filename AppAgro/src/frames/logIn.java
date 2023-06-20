@@ -1,23 +1,31 @@
 package AppAgro.src.frames;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import AppAgro.src.App;
 
 
 public class logIn {
@@ -40,7 +48,7 @@ public class logIn {
     private void initialize(){
         frame = new JFrame("LogIn | Agro-Directo");
         ImageIcon icon = new ImageIcon(getClass().getResource("/AppAgro/src/img/Icon6.png"), "Icon");
-        frame.setSize(900, 540);
+        frame.setSize(850, 400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setIconImage(icon.getImage());
@@ -49,15 +57,45 @@ public class logIn {
 
 
         descriptionPanel = new JPanel();
-        descriptionPanel.setBackground(Color.gray);
-        inputPanel = new JPanel();
-        descriptionPanel.setBackground(Color.DARK_GRAY);
+        descriptionPanel.setBackground(Color.lightGray);
+        descriptionPanel.setLayout(new GridLayout(2, 1));
+            
+            JLabel etiquetaImagen = new JLabel();
+            etiquetaImagen.setBackground(Color.GREEN);
+            etiquetaImagen.setSize(270, 189);
 
+            ImageIcon importImage = new ImageIcon(getClass().getResource("/AppAgro/src/img/Logo3.png"), "Logo");
+
+            Icon logo = new ImageIcon(importImage.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_AREA_AVERAGING));
+
+            etiquetaImagen.setIcon(logo);
+
+            etiquetaImagen.setHorizontalAlignment(JLabel.CENTER);
+
+            JPanel textPanel = new JPanel();
+            textPanel.setLayout(new GridBagLayout());
+            textPanel.setBackground(new Color(0, 0, 0, 0));
+
+
+            JTextArea label = new JTextArea("Agro-Directo busca reducir los costos de la intermediación, acercando a los distribuidores finales con los campesinos productores.");
+            label.setBackground(new Color(0, 0, 0, 0));
+            label.setFont(new Font(null, Font.BOLD, 15));
+            label.setPreferredSize(new Dimension(350, 100));
+            label.setEditable(false);
+            label.setWrapStyleWord(true);
+            label.setLineWrap(true);
+            textPanel.add(label);
+
+
+        descriptionPanel.add(etiquetaImagen, BorderLayout.NORTH);
+        descriptionPanel.add(textPanel, BorderLayout.CENTER);
+        
+        
+        inputPanel = new JPanel();
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints maingbc = new GridBagConstraints();
         maingbc.fill = GridBagConstraints.HORIZONTAL;
         maingbc.insets = new Insets(0, 30, 0, 30);
-        // maingbc.anchor = GridBagConstraints;
         maingbc.weightx = 1;
         maingbc.gridx = 0;
         maingbc.gridy = 0;
@@ -164,50 +202,25 @@ public class logIn {
                         if(!userOK){
                             userArea.setBackground(new Color(255, 211, 211));
                             userArea.setBorder(BorderFactory.createLineBorder(Color.RED));
+                            JOptionPane.showMessageDialog(frame, "Error");
 
                         } 
                         if(!passwordOK){
                             passwordArea.setBackground(new Color(255, 211, 211));
                             passwordArea.setBorder(BorderFactory.createLineBorder(Color.RED));
-                            
+                            JOptionPane.showMessageDialog(frame, "Error");
                         }
                     }
-
-                    // if(userOK){
-                    //     userArea.setBackground(Color.white);
-                    //     userArea.setBorder(BorderFactory.createLineBorder(Color.gray));
-                    //     // System.out.println("Usuario correcto");
-                    // } else {
-                    //     userArea.setBackground(new Color(255, 211, 211));
-                    //     userArea.setBorder(BorderFactory.createLineBorder(Color.RED));
-                    //     // System.out.println("Usuario Incorrecto");
-                    // }
-                    // if (passwordOK) {
-                    //     passwordArea.setBackground(Color.white);
-                    //     passwordArea.setBorder(BorderFactory.createLineBorder(Color.gray));
-                    //     // System.out.println("Contraseña correcta");
-                    // } else {
-                    //     passwordArea.setBackground(new Color(255, 211, 211));
-                    //     passwordArea.setBorder(BorderFactory.createLineBorder(Color.RED));
-                    //     // System.out.println("Contraseña Incorrecta");
-                    // }
-
-
                 }
         });
     }
 
     private void sendInfo(){
-        // frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-        JPanel blockingPanel = new JPanel();
-        blockingPanel.setBackground(new Color(0, 0, 0, 64));
-        blockingPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        frame.setGlassPane(blockingPanel);
-        blockingPanel.setVisible(true);
-
+        frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        send.setEnabled(false);
         // open the main process
         
+        App.main(null, 2);
         frame.dispose();
     }
 
